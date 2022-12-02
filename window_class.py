@@ -1,8 +1,6 @@
 from os.path import exists
 import pickle
 import random
-import re
-import sys
 import threading
 import time
 import tkinter as tk
@@ -26,6 +24,8 @@ class Window:
 
     def NewText(self):
         self.current_text = random.choice(self.texts_variants)
+        while self.current_text == "":
+            self.current_text = random.choice(self.texts_variants)
         self.TextLabel.config(text=self.current_text)
 
     def StartProgramm(self, event):
@@ -106,8 +106,6 @@ class Window:
         self.current_character_index = 0
         self.word_counter = 0
         self.error_count = 0
-        if not exists("error_log.dat"):
-            pickle.dump(0, open("error_log.dat"), "wb")
         self.char_count = 0
         self.error_count = pickle.load(open("error_log.dat", "rb"))
         self.texts_variants = open("texts.txt", "r").read().split('\n')
